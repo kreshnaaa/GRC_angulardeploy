@@ -1,0 +1,19 @@
+<div class="links d-flex">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item setup-hearder ms-2 "><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="#">{{mastersText}}</a></li>      
+      <li class="breadcrumb-item active align-header" aria-current="page">Role</li>
+    </ol>
+  </div>
+  
+
+<!-- 
+<div class="cardsetup links d-flex">
+    <ol class="breadcrumb ms-4 mt-2">
+      <li class="breadcrumb-item setup-hearder ms-2"><a href="#">home</a></li>
+      <li *ngFor="let breadcrumb of breadcrumbs" class="breadcrumb-item setup-hearder ms-2" [class.active]="breadcrumb.active" [attr.aria-current]="breadcrumb.active ? 'page' : null">
+        <a *ngIf="!breadcrumb.active; else activeLabel" [href]="breadcrumb.url">{{ breadcrumb.label }}</a>
+        <ng-template #activeLabel>{{ breadcrumb.label }}</ng-template>
+      </li>
+    </ol>
+  </div> -->

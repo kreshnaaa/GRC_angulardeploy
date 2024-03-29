@@ -1,0 +1,65 @@
+<div>
+<app-cardheader>
+    <app-breadcrumb [mastersText]="mastersText"></app-breadcrumb>
+    <div class="">
+        <h5> 
+           <img src="\assets\Images\profile.svg" alt="profile" class="profile"> 
+          User Setup </h5>
+        <div class="d-flex button">
+                <input class="search" type="text" placeholder="All" class="filter">
+                <img src="\assets\Images\CaretDownOutlined.svg" alt="dropdown" class="filtericon">
+           
+                <input class="search-input" type="text" placeholder="Search">
+            <img src="\assets\Images\search.svg" alt="search" class="searchicon">
+                <button 
+                class="addcustomer" (click)="toggleUserForm()"
+              >        
+              <img src="\assets\Images\PlusCircleOutlined.svg" alt="plus">           
+              Add New User 
+                </button> 
+        </div>
+    </div>
+    <section>
+        <div class="table-container card m-4">
+            <table>
+                <thead>
+                    <tr>
+                        <th >Role</th>
+                        <th>Name </th>
+                        <th>Email Id </th>
+                        <th>Status </th>
+                        <th style="border: 2px solid #ffffff; " >Action</th>
+                        <!-- <th> Approved <i class="bi bi-caret-down-fill red-caret-down"></i></th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of tableData | paginate: { itemsPerPage: tableSize, currentPage: page }">
+                            <!-- <td>{{row.role}}</td>
+                            <td>{{row.name}}</td>
+                            <td>{{row.email}}</td>
+                            <td>{{row.status}}</td> -->
+                            <td><img src="assets\Images\EditOutlined.svg" alt="edit"  class="image" >
+                                <img src="assets\Images\DeleteOutlined.svg" alt="delete" class="delete" >
+                             </td>                            
+                        </tr>
+                </tbody>
+                <ng-template #noDataFound>
+                    <tr>
+                        <td colspan="12" style="padding-left: 600px;">No data found</td>
+                    </tr>
+                </ng-template>
+            </table>
+        </div>
+    </section>
+        <div class="d-flex justify-content-center">
+            <pagination-controls (pageChange)="onTableDataChange($event)" previousLabel="Prev" nextLabel="Next" style="font-family: Poppins;
+            font-size: 14px;
+            font-style: normal; height: 35px;">
+            </pagination-controls>
+        </div>
+
+        <app-user-list  [showUserForm]="showUserForm"></app-user-list>
+
+</app-cardheader>
+</div>
+

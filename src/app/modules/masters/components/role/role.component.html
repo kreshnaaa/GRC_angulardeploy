@@ -1,0 +1,221 @@
+    <!-- <p>role works!</p> -->
+    <div class="container">
+        <div class="m-4">
+            <div class="card rounded-0  border-info">
+                <section>
+              <div class="links d-flex">
+                <!-- <a routerLink="/home" class="home" (click)="onClickIcon()">Home /</a>
+                <a routerLink="/license" class="license" (click)="onClickIcon()">License</a> -->
+                <ol class="breadcrumb ms-4 mt-2">
+                    <!-- <li class="breadcrumb-item setup-hearder ms-2 "><a href="#">Home</a></li> -->
+                    <!-- <img src="assets\Images\profile.svg" alt="icon"> -->
+                    <li class="breadcrumb-item setup-hearder ms-2 "><a href="#">Home</a></li>
+                    <li class="breadcrumb-item setup-hearder ms-2 "><a href="">Masters</a></li>
+                    <li class="breadcrumb-item active align-header" aria-current="page">Role </li>
+                </ol>
+              </div>
+              <div class="">
+                <h5> 
+                    <img src="assets\Images\profile.svg" alt="profile" class="profile"> 
+                    Role Setup </h5>
+                 
+                <div class="d-flex button">
+                    <!-- <div class="inline-flex"> -->
+                        <input class="search" type="text" placeholder="All" class="filter">
+                        <img src="assets\Images\CaretDownOutlined.svg" alt="dropdown" class="filtericon">
+                   
+                        <input class="search-input" type="text" placeholder="Search">
+                    <!-- <i class="bi bi-search searchicon"></i>  -->
+                    <img src="\assets\Images\search.svg" alt="search" class="searchicon">
+                    <!-- </div> -->
+                        <button
+                        class="addcustomer" (click)="toggleFormDisplay()">
+                             
+                      <img src="assets\Images\PlusCircleOutlined.svg" style="margin-right:10px;">            
+                             Add New Role
+                        </button>
+                    </div>
+                    </div>
+                   
+               
+               
+                <div>
+                   
+                <div class="table-container card m-4">
+                    <table>
+                        <thead>
+                          <tr>
+                            <th>Role Name </th>
+                            <th>Role Description</th>
+                            <th>Disable </th>
+                            <th style="border: 2px solid #ffffff; ">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="originalList && originalList.length > 0; else noDataFound">
+                          <tr *ngFor="let item of originalList | paginate: { itemsPerPage: tableSize, currentPage: page }">
+                           
+                               
+                               
+                           <td>{{item.roleName}}</td>                      
+                           <td>{{item.description}}</td>
+                           <td>{{item.active}}</td>
+                           <td><img src="assets\Images\EditOutlined.svg" alt="edit" (click)="editRole(item,'edit')"  class="image"><img src="assets\Images\DeleteOutlined.svg" alt="delete" class="delete" (click)="deleteRow(item.sysRoleId)"> </td>                            
+                           <!-- <button class="ml-1" style="border: none; background: none;" (click)="deleteRow(item.sysRoleId)">
+                            <img src="assets\Images\DeleteOutlined.svg" alt="delete" style="margin-left:20px;">
+                        </button>
+                        <button (click)="editRole(item,'edit')"  class="ml-1" style="border: none; background: none;">
+                            <img src="assets\Images\EditOutlined.svg"  alt="edit" style="margin-left:5px;">
+                            </button> -->
+                        <!-- </td> -->
+                        </tr>
+                       
+                        </tbody>
+                        <ng-template #noDataFound>
+                        <tr>
+                            <td colspan="12" style="text-align: center;">No data found</td>
+                        </tr>
+                    </ng-template>
+                      </table>
+                     
+                </div>
+            </div>
+                <div class="d-flex justify-content-center">
+                    <pagination-controls (pageChange)="onTableDataChange($event)" previousLabel="Prev" nextLabel="Next" style="font-family: Roboto;
+                    font-size: 14px;
+                    font-style: normal;">
+                    </pagination-controls>
+                </div>
+               
+            <div class="cardform" *ngIf="showForm" >
+           
+                <div class="container m-3">
+                    <form  class="row" [formGroup]="roleForm">
+                        <h5>New Role</h5>
+                        <div class="custom-hr">
+                            <hr>
+                        </div>
+                        <div class="field" style="margin-left:250px;">
+                        <div class="row">
+                            <div class="col d-flex">
+                                <div class="form-group">
+                                    <label for="roleName" class="form-label">Role Name</label>
+                                    <input type="text" id="name" formControlName="roleName" class="input-class"
+                                        placeholder="name">
+                                    <div class="error"
+                                        *ngIf="roleForm.get('roleName')?.hasError('required') && roleForm.get('roleName')?.touched">
+                                        Please enter the name
+                                    </div>
+                                    <div class="error" *ngIf="roleForm.get('roleName')?.hasError('pattern')">
+                                        No numeric and special characters allowed
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+     
+                        <div class="row">
+                            <div class="col d-flex">
+                                <div class="form-group">
+                                    <label for="description" class="form-label">Role Description </label>
+                                    <input type="description" id="description" formControlName="description"
+                                        class="input-class" placeholder="description">
+                                    <div class="error"
+                                        *ngIf="roleForm.get('description')?.hasError('required') && roleForm.get('description')?.touched">
+                                        Please enter the Description
+                                    </div>
+                                    <div class="error" *ngIf="roleForm.get('description')?.hasError('description')">
+                                        Please enter the valid description
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                           <div class="row">
+                            <div class="col d-flex">
+                                <label for="status" class="form-label">Disable</label>
+                                <div style="margin-left: 40px; margin-top: 5px;">
+                                  <label  class="custom-radio-label">
+                                    <input type="radio" formControlName="active" value="Y"> Active
+                                  </label>
+                                  <label class="ms-2 custom-radio-label">
+                                    <input type="radio" formControlName="active" value="N"> Inactive
+                                  </label>
+                                </div>
+                               
+                            </div>  
+                        </div>  
+                    </div>  
+                        <div class="d-flex justify-content-center" style="padding-top: 40px ; padding-left: 150px;">
+                            <div class="col"></div>
+                               
+                            <div class="col ">
+                                <button class="me-2 submit-button" (click)="onCancel()" >
+                                  Cancel
+                                </button>
+                                <button  class="cancel-button"(click)="submitData()" type="submit">Submit</button>
+                            </div>
+                            <div class="col"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </section>
+
+                <!-- Edit section -->
+            <div class="cardform" *ngIf="isEditRole">
+                <div class="container m-3">
+                <form class="row" [formGroup]="roleForm" (ngSubmit)="editRole(roleForm.value, 'submit')">
+                    <h5>Edit Role</h5>
+                    <div class="custom-hr">
+                    <hr>
+                    </div>
+                    <div class="field" style="margin-left:250px;">
+                    <div class="row">
+                        <div class="col d-flex">
+                        <div class="form-group">
+                            <label for="roleName" class="form-label">Role Name</label>
+                            <input type="text" id="roleName" formControlName="roleName" class="input-class" placeholder="Role Name">
+                            <div class="error" *ngIf="roleForm.get('roleName')?.hasError('required') && roleForm.get('roleName')?.touched">
+                            Please enter the role name
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+            
+                    <div class="row">
+                        <div class="col d-flex">
+                        <div class="form-group">
+                            <label for="description" class="form-label">Role Description</label>
+                            <input type="text" id="description" formControlName="description" class="input-class" placeholder="Role Description">
+                            <div class="error" *ngIf="roleForm.get('description')?.hasError('required') && roleForm.get('description')?.touched">
+                            Please enter the role description
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+            
+                    <div class="row">
+                        <div class="col d-flex">
+                        <label for="active" class="form-label">Status</label>
+                        <div style="margin-left: 40px; margin-top: 5px;">
+                            <label class="custom-radio-label">
+                            <input type="radio" formControlName="active" value="Y"> Active
+                            </label>
+                            <label class="ms-2 custom-radio-label">
+                            <input type="radio" formControlName="active" value="N"> Inactive
+                            </label>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+            
+                    <div class="d-flex justify-content-center" style="padding-top: 40px; padding-left: 150px;">
+                    <div class="col"></div>
+                    <div class="col">
+                        <button type="button" class="me-2 submit-button" (click)="onCancel()">Cancel</button>
+                        <button type="submit" class="cancel-button">Submit</button>
+                    </div>
+                    <div class="col"></div>
+                    </div>
+                </form>
+                </div>
+            </div>
+  

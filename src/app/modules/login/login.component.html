@@ -1,0 +1,161 @@
+<div routerLink="/login" rourterLinkActive="active">
+   
+  <div class="body">
+   <div class="row">
+     <div class="" *ngIf="showLoginForm"  onsubmit="submit()">
+       <!-- <form [formGroup]="loginForm" class="formlogin"> -->
+         <div class="grc" style="font-family: 'sarabun-regular',sans-serif;margin-top:100px;">
+           <img src="/assets/Images/ant.svg" alt="image" style="height: 50px;width: 50px;margin-right:5px;">My GRC Portal</div>
+           <div class="logins" style="font-size: 14px;margin-bottom: 5px;margin-left:500px;color: hsl(0, 0%, 45%);font-family:'sarabun-light',sans-serif ;font-weight: 400px;">
+             A governance, risk, and compliance framework helps an organization align its IT with business
+             </div>
+            
+             <div class="it" style="margin-left:670px;font-size: 14px; margin-bottom: 30px;color: hsl(0, 0%, 45%);font-family:'sarabun-light',sans-serif ;font-weight: 400px;">
+              objectives and regulatory compliance needs.
+             </div>
+            
+  
+        
+         <div class="Login" style="font-family: 'sarabun-light',sans-serif; margin-right:400px;margin-left:50px;margin-bottom: -10px;">Login</div>
+         <!-- <div class="SIGN" style="font-family: 'sarabun-light',sans-serif;margin-left:100px;color:black; margin-bottom:20px;">Sign Up</div> -->
+         <div class="hr" style="color:grey;width:500px;margin-left:550px;">
+           <hr>
+        
+         </div>
+  
+         <form [formGroup]="loginForm" class="formlogin">
+  
+         <div class="label">
+         <div>
+           <label for="un"></label>
+           <div class="input-group  border-1 border-dark" style="margin-top: -40px;color:rgb(236, 227, 227)">
+             <span class="input-group-text">
+               <img src="/assets/Images/person.svg" style="width:25px;height:20px;background:none;">
+             </span>
+             <input type="text" formControlName="email" name="Email-Id" id="un" placeholder="Username : admin or user" style="border: none;">
+           </div>
+           <div class="error" *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">
+             Please enter the email id
+           </div>
+         </div>
+        
+  
+  
+         <label for="pw"> </label>
+         <div class="input-group" style="margin-top: -10px;">
+           <span class="input-group-text">
+             <img src="/assets/Images/password.svg" style="width:20px;height:20px;background:none;">
+           </span>
+         <input type="password" formControlName="password" name="password" id="pw" placeholder="Password : ****" style="border: none;">
+        
+         <svg xmlns="" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill"
+           id="togglePassword" viewBox="0 0 16 16" (click)="togglePasswordVisibility()">
+  
+         </svg>
+         <svg xmlns="" width="16" height="16" fill="currentColor" class="bi bi-eye" id="
+               togglePasswordSlash" style="display: none;" viewBox="0 0 16 16" (click)="togglePasswordVisibility()">
+  
+         </svg>
+         </div>
+         <div class="error"
+           *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+           Please enter the password
+         </div>
+         </div>
+  
+         <div >
+           <label>
+             <input class="checkbox" type="checkbox"[(ngModel)]="rememberMe"  style="color:black; margin-top:25px;"> Remember me
+           </label>
+           <!-- <div *ngIf="showmfa">
+             <label for="mfa">MFA Code </label>
+             <input type="code" formControlName="mfa" name="mfa" id="mfa" placeholder="">
+             <div class="error" *ngIf="loginForm.get('mfa')?.hasError('required') && loginForm.get('mfa')?.touched">
+               Please enter the MFA code
+             </div>
+           </div> -->
+          
+  
+           <div class="btn_alignments">
+             <!-- <button type="button" style="background: #6dade8;margin-top: 10px;padding:2px;" id="reset"
+              >RESET</button>-->
+             <button type="button" style="background:#1890ff;font-family:'sarabun-regular',sans-serif;font-size:15px ;font-weight: 10px; margin-top: 10px;padding:8px;"
+               id="submit" (click)="submit()">Sign In</button>
+             <!-- <hr class="line">
+             <a class="Reset">Reset-password?</a> -->
+           </div>
+         </div>
+       </form>
+      
+     </div>
+     </div>
+    
+    
+    
+  
+  
+  
+       <!-- <div class="body">
+         <div class="row"> -->
+  
+         <div class="" *ngIf="showmfa">
+       <!-- <form [formGroup]="mfaForm" class="formlogin" onsubmit="mfaSubmit()"> -->
+           <div class="grc" style="font-family: 'sarabun-regular',sans-serif;margin-top:100px;">
+             <img src="/assets/Images/ant.svg" alt="image" style="height: 50px;width: 50px;margin-right:5px;">My GRC Portal</div>
+             <div class="logins" style="font-size: 14px;margin-bottom: 5px;margin-left:550px;color: hsl(0, 0%, 45%);font-family:'sarabun-light',sans-serif ;font-weight: 400px;">
+               A governance, risk, and compliance framework helps an organization align its IT with business
+               </div>
+              
+               <div class="it" style="margin-left:670px;font-size: 14px; margin-bottom: 30px;color: hsl(0, 0%, 45%);font-family:'sarabun-light',sans-serif ;font-weight: 400px;">
+                objectives and regulatory compliance needs.
+               </div>
+  <div class="Login" style="font-family: 'sarabun-light',sans-serif;margin-right:400px;margin-bottom:-10px;margin-left:50px ;">MFA</div>
+      <div class="hr" style="color:grey;width:500px;margin-left:550px;">
+       <hr>
+     </div>
+  
+     <form [formGroup]="mfaForm" class="formlogin" onsubmit="mfaSubmit()">
+  
+  
+         <div class="label">
+           <div>
+             <label for="mfa"> </label>
+             <div class="input-group mb-3" style="margin-top: -30px;">
+               <span class="input-group-text">
+                 <img src="/assets/Images/mfa.svg" style="width:25px;height:20px;background:none;">
+               </span>
+             <input type="code" formControlName="mfa" name="mfa" id="mfa" placeholder="MFA" style="border: none;">
+             </div>
+             <div class="error" *ngIf="loginForm.get('mfa')?.hasError('required') && loginForm.get('mfa')?.touched">
+               Please enter the MFA code
+             </div>
+           </div>
+  
+  
+           <div class="btn_alignments">
+             <!-- <button type="button" style="background: #6dade8;margin-top: 10px;padding:2px;" id="reset"
+               >RESET</button> -->
+  
+             <button type="button" style="background:#1890ff;font-family: 'sarabun-regular',sans-serif;font-size: 15px;font-weight: 10px; margin-top: 10px;padding:8px;" id="submit" (click)="mfaSubmit()">SUBMIT</button>
+             <!-- <hr class="line">
+             <a class="Reset" >Reset-password?</a> -->
+  
+  
+           </div>
+         </div>
+  
+       </form>
+  
+      
+  
+     </div>
+  
+  
+  <div class="copy" style="margin-left:530px;margin-top:350px;font-size: 15px; color: hsl(0, 0%, 45%);font-family: 'sarabun-regular',sans-serif;font-weight: 400px;">
+ <p>
+     Copyright &#64; 2024 Produced by TechOptima Pvt Ltd
+ </p>
+ </div>
+  
+ </div>
+ </div>

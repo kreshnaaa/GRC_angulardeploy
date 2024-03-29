@@ -1,0 +1,448 @@
+<div class="container">
+    <div class="m-4">
+        <div class="card rounded-0 border-info">
+            <div class="cardsetup">
+            <div class="links d-flex">
+                    <ol class="breadcrumb ms-4 mt-2">
+                        <li class="breadcrumb-item setup-hearder ms-2 "><a href="#">Home</a></li>
+                        <li class="breadcrumb-item setup-hearder ms-2 "><a href="">Client Management</a></li>
+                        <li class="breadcrumb-item active align-header" aria-current="page">License Management</li>
+                    </ol>
+            </div>
+                  <div class="">
+                    <h5> 
+                       <img src="assets\Images\profile.svg" alt="profile" class="profile"> 
+                      License Management </h5>
+                    <div class="d-flex button">
+                        <!-- <div class="inline-flex"> -->
+                            <input class="search" type="text" placeholder="All" class="filter">
+                            <img src="assets\Images\CaretDownOutlined.svg" alt="dropdown" class="filtericon">
+                            <input class="search-input" type="text" placeholder="Search">
+                        <!-- <i class="bi bi-search searchicon"></i>  -->
+                        <img src="\assets\Images\search.svg" alt="search" class="searchicon">
+                        <!-- </div> -->
+                            <button 
+                            class="addcustomer" (click)="toggleFormDisplay()"
+                          >        
+                    <img src="assets\Images\PlusCircleOutlined.svg" alt="plus">           
+                                 Add New License
+                            </button> 
+                        </div>
+                    </div>
+                    <div>
+                </div>
+            </div> 
+            <section>
+                <div class="table-container card m-4">
+                    <table >
+                        <thead>
+                            <tr>
+                                <th>Customer Name </th>
+                                <th> Compliance  </th>
+                                <!-- <th>Governance </th> -->
+                                <th>Remarks</th>
+                                <th>Start/Renewal Date</th>
+                                <th>End Date </th>
+                                <th>Contract Period </th>
+                                <!-- <th>Renuewal Date</th> -->
+                                <th>Contract Document </th>
+                                <th> Status </th>
+                                <th style="border: 2px solid #ffffff; " >Action</th>
+                                <!-- <th> Approved <i class="bi bi-caret-down-fill red-caret-down"></i></th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of tableData | paginate: { itemsPerPage: tableSize, currentPage: page }">
+                                <!-- <td>{{row.customerId}}</td> -->
+                                <td>
+                                    <!-- {{ row.customerId }} - -->
+                                     {{ row.customerIdName }}</td>
+                                <!-- <td>{{row.active}}</td> -->
+                                <!-- <td>{{row.lisenceId}}</td> -->
+                                <!-- <td>{{row.standardId}}</td> -->
+                                <td>
+                                    <!-- {{ row.standardId }} -  -->
+                                    {{ row.standardIdName }}</td>
+                                <td>{{row.remarks}}</td>
+                                <td>{{row.startOrRenewalDate}}</td>
+                                <td>{{row.endDate}}</td>
+                                <!-- <td>{{row.lisenceRenewalDate}}</td> -->
+                                <td>{{row.contractPeriodInMonths}}</td>
+                                <td>{{row.contractDocuments}}</td>
+                                <td>{{row.active}}</td>
+                                <td><img src="assets\Images\EditOutlined.svg" alt="edit" (click)="editLicense(row,'edit')"></td>
+                            </tr>
+                        </tbody>
+                        <ng-template #noDataFound>
+                            <tr>
+                                <td colspan="12" style="padding-left: 600px;">No data found</td>
+                            </tr>
+                        </ng-template>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <pagination-controls (pageChange)="onTableDataChange($event)" previousLabel="Prev" nextLabel="Next" style="font-family: Roboto;
+                    font-size: 14px;
+                    font-style: normal; height: 35px;">
+                    </pagination-controls>
+                </div>
+                <div class="cardform" *ngIf="showForm ">
+                    <div class="container m-2">
+                        <form  class="row" [formGroup]="licenceForm" (ngSubmit)="submitFormData()">
+                            <h5>New License</h5>
+                            <div class="custom-hr">
+                                <hr>
+                             </div>
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                    <label for="customerName" class="form-label">Customer Name</label>
+                                    <select class="input-class" id="customerName" aria-label="Default select example"
+                                    formControlName="customerId"
+                                    [disabled]="!customerlist">
+                                    <option disabled selected value="">Select customer</option>
+                                    <option *ngFor="let customer of customerlist"
+                                        [value]="customer.customerId">
+                                    {{ customer.customerCompanyName }}
+                                    </option>
+                                </select>
+                                    <!-- <input type="text" id="customerName" formControlName="customerName" class="input-class"> -->
+                                    <div  class="error" *ngIf="licenceForm.get('customerId')?.hasError('required') && licenceForm.get('customerId')?.touched">
+                                        Please select the customer name
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                      <label for="submenu" class="form-label">Compliance</label>
+                                      <!-- <select formControlName="lisenceStdName" class="input-class" style="width: 218px;" (click)="governanceTouched = true">
+                                          <option *ngFor="let lisenceStdName of lisenceStdNames" [value]="lisenceStdName">{{ lisenceStdName }}</option>
+                                          <option disabled selected value>Select Compliance </option>
+                                      </select> -->
+                                      <select aria-placeholder="name" class="input-class" id="dropdown" formControlName="standardId">
+                                          <option [value]="null" disabled selected>Select Dropdown</option>
+                                          <option *ngFor="let licenseName of standardnamedropdownItems" [value]="licenseName.id">{{
+                                              licenseName.name }}</option>
+                                     </select>
+                                
+                                       <div class="error" *ngIf="licenceForm.get('standardId')?.hasError('required') && licenceForm.get('standardId')?.touched">
+                                        Please select the compliance
+                                      </div> 
+                                  </div>
+                                </div>     
+                            </div>
+                            <!-- <div class="row">
+                                <div class="col d-flex">
+                                  <div class="form-group">
+                                    <label for="lisenceGovernanceName" class="form-label">Governance</label>
+                                    <select formControlName="lisenceGovernanceName" class="input-class" formControlName="lisenceGovernanceName" name="lisenceGovernanceName"  aria-label="Default select example" (change)="onMenuChange()">
+                                      <option disabled selected value>Select Governance </option>
+                                      <option value="cybersecurity">Cybersecurity</option>
+                                      <option value="business_continuity">Business Continuity</option>
+                                      <option value="quality">Quality</option>
+                                      <option value="health_safety">Health & Safety</option>
+                                      <option value="privacy">Privacy</option>
+                                      <option value="cloud">Cloud</option>
+                                      <option value="data">Data</option>
+                                    </select>
+                                    <div  class="error" *ngIf="licenceForm.get('lisenceGovernanceName')?.hasError('required') && licenceForm.get('lisenceGovernanceName')?.touched">
+                                        Please select the governance
+                                    </div>
+                                  </div>
+                                </div>
+                                *ngIf="showlisenceStdName"
+                                <div class="col d-flex">
+                                  <div class="form-group" >
+                                    <label for="submenu" class="form-label">Compliance</label>
+                                    <select formControlName="lisenceStdName" class="input-class" style="width: 218px;">
+                                      <option *ngFor="let lisenceStdName of lisenceStdNames" [value]="lisenceStdName">{{ lisenceStdName }}</option>
+                                      <option disabled selected value>Select Compliance </option>
+                                    </select>
+                                    <div  class="error" *ngIf="licenceForm.get('lisenceStdName')?.hasError('required') && licenceForm.get('lisenceStdName')?.touched">
+                                        Please select the compliance
+                                    </div>
+                                  </div>
+                                </div>
+                              </div> -->
+                              <div class="row">
+                                <div class="col d-flex">
+                                  <div class="form-group">
+                                    <label for="lisenceGovernanceName" class="form-label">Governance</label>
+                                    <!-- <select formControlName="lisenceGovernanceName" class="input-class" aria-label="Default select example" (change)="onMenuChange()">
+                                      <option disabled selected value>Select Governance </option>
+                                      <option value="cybersecurity">Cybersecurity</option>
+                                      <option value="business_continuity">Business Continuity</option>
+                                      <option value="quality">Quality</option>
+                                      <option value="health_safety">Health & Safety</option>
+                                      <option value="privacy">Privacy</option>
+                                      <option value="cloud">Cloud</option>
+                                      <option value="data">Data</option>
+                                    </select> -->
+                                    <select aria-placeholder="name" class="input-class" id="dropdown" >
+                                        <option [value]="null" disabled selected>Select Dropdown</option>
+                                        <!-- <option *ngFor="let licenseName of goverencenamedropdownItems" [value]="licenseName.id">{{
+                                            licenseName.name }}</option> -->
+                                   </select>
+                                    <div class="error" *ngIf="licenceForm.get('id')?.hasError('required') && licenceForm.get('id')?.touched">
+                                      Please select the governance
+                                    </div>
+                                  </div>
+                                </div>
+                              
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                        <label for="remarks" class="form-label">Remarks </label>
+                                        <input type="text" id="remarks" formControlName="remarks" class="input-class" placeholder="Remarks">
+                                        <div  class="error" *ngIf="licenceForm.get('remarks')?.hasError('required') && licenceForm.get('remarks')?.touched">
+                                            Please enter the remarks.
+                                          </div>
+                                    </div>
+                                </div>
+                              </div>
+                              
+    
+                              <div class="row">
+                                <div class="col d-flex">
+                                  <div class="form-group">
+                                    <label for="startdate" class="form-label"> Start/Renewal Date</label>
+                                    <input type="date" id="startdate" formControlName="startOrRenewalDate" class="input-class data">
+                                    <div class="error" *ngIf="licenceForm.get('startOrRenewalDate')?.hasError('required') && licenceForm.get('startOrRenewalDate')?.touched">
+                                      Please select the date.
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                      <label for="enddate" class="form-label"> End Date </label>
+                                      <input type="date" id="enddate" formControlName="endDate" class="input-class" placeholder=" ">
+                                      <div class="error" *ngIf="licenceForm.get('endDate')?.hasError('required') && licenceForm.get('endDate')?.touched">
+                                          Please select the date.
+                                      </div>
+                                    </div>
+                                  </div>
+                              
+                              </div>
+                              
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                      <label for="contrperiod" class="form-label"> Contract Period </label>
+                                      <input type="number" id="contrperiod" formControlName="contractPeriodInMonths" class="input-class" placeholder="Contract Period" >
+                                      <div class="error" *ngIf="licenceForm.get('contractPeriodInMonths')?.hasError('required') && licenceForm.get('contractPeriodInMonths')?.touched">
+                                        Please enter the number of period.
+                                      </div>
+                                    </div>
+                                  </div> 
+                                  <div class="col d-flex">
+                                    <div class="form-check ">
+                                        <label class="form-label" for="flexCheckDefault" style="margin-left:-20px;">
+                                          Approved
+                                        </label>
+                                        <div>
+                                        <input class="form-check-input custom-checkboxitem" type="checkbox" value="" id="flexCheckDefault" style="margin-left:215px;margin-top:-30px;"> 
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                             
+                                
+                            <div class="row">
+                             
+                               
+                                <div class="col d-flex">
+                                    <!-- <div class="form-group">
+                                      <label for="renuewaldate" class="form-label"> Contract Renewal date</label>
+                                      <input type="date" id="renuewaldate" formControlName="lisenceRenewalDate" class="input-class" style="width: 220px;"/>   
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label for="formFile" class="form-label">Contract Document</label>
+                                        <!-- <input class="form-control" type="file" id="formFile"> -->
+                                        <input type="file" id="logoUrlPath" class="form-control" 
+                                        style="width: 245px; margin-left: 30px; font-size: 14px;" formControlName="contractDocuments"
+                                        aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                        <div  class="error" *ngIf="licenceForm.get('contractDocuments')?.hasError('required') && licenceForm.get('contractDocuments')?.touched">
+                                            Please upload the documents.
+                                         </div> 
+                                    </div>
+                                </div>
+                                <div class="col d-flex">
+                                    <label for="status" class="form-label">Status</label> 
+                                    <div style="margin-left: 40px; margin-top: 5px;">
+                                      <label  class="custom-radio-label">
+                                        <input type="radio" formControlName="active" value="Y"> Active
+                                      </label>
+                                      <label class="ms-2 custom-radio-label">
+                                        <input type="radio" formControlName="active" value="N"> Inactive
+                                      </label>
+                                    </div>
+                                   
+                                  </div>  
+                            </div>
+                               
+                            <div class="d-flex justify-content-center" style="padding-top: 20px ; padding-left: 150px;">
+                                <div class="col"></div>
+                                   
+                                <div class="col">
+                                    <button class="me-2 submit-button" (click)="onCancel()">
+                                      Cancel
+                                    </button>
+                                    <button  class="cancel-button" type="submit">Submit</button>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div> 
+    
+            </section>
+
+            <!-- edit section -->
+            <div class="cardform" *ngIf="isEditLicense">
+                <div class="container m-3">
+                    <form  class="row" [formGroup]="licenceForm"  (ngSubmit)="editLicense(licenceForm.value, 'submit')">
+                        <h5>Edit License</h5>
+                        <div class="custom-hr">
+                            <hr>
+                         </div>
+                        <div class="row">
+                            <div class="col d-flex">
+                                <div class="form-group">
+                                <label for="customerName" class="form-label">Customer Name</label>
+                                <select class="input-class" id="customerName" aria-label="Default select example"
+                                formControlName="customerId"
+                                [disabled]="!customerlist">
+                                <option disabled selected value="">Select customer</option>
+                                <option *ngFor="let customer of customerlist"
+                                    [value]="customer.customerId">
+                                {{ customer.customerCompanyName }}
+                                </option>
+                            </select>
+                                <div  class="error" *ngIf="licenceForm.get('customerName')?.hasError('required') && licenceForm.get('customerName')?.touched">
+                                    Please select the customer name
+                                </div>
+                              </div>
+                            </div>
+                           
+                              
+                        </div>
+                          <div class="row">
+                            <div class="col d-flex">
+                              <div class="form-group">
+                                <label for="lisenceGovernanceName" class="form-label">Governance</label>
+                                <select aria-placeholder="name" class="input-class" id="dropdown" >
+                                    <option [value]="null" disabled selected>Select Dropdown</option>
+                               </select>
+                                <div class="error" *ngIf="licenceForm.get('id')?.hasError('required') && licenceForm.get('id')?.touched">
+                                  Please select the governance
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <div class="col d-flex">
+                              <div class="form-group">
+                                <label for="submenu" class="form-label">Compliance</label>
+                            
+                                <select aria-placeholder="name" class="input-class" id="dropdown" formControlName="standardId">
+                                    <option [value]="null" disabled selected>Select Dropdown</option>
+                                    <option *ngFor="let licenseName of standardnamedropdownItems" [value]="licenseName.id">{{
+                                        licenseName.name }}</option>
+                               </select>
+                          
+                                 <div class="error" *ngIf="licenceForm.get('lisenceStdName')?.hasError('required') && licenceForm.get('lisenceStdName')?.touched">
+                                  Please select the compliance
+                                </div> 
+                            </div>
+                          </div>
+                          </div>
+                          
+
+                          <div class="row">
+                            <div class="col d-flex">
+                              <div class="form-group">
+                                <label for="startdate" class="form-label"> Start/Renewal Date</label>
+                                <input type="date" id="startdate" formControlName="startOrRenewalDate" class="input-class data">
+                                <div class="error" *ngIf="licenceForm.get('startOrRenewalDate')?.hasError('required') && licenceForm.get('startOrRenewalDate')?.touched">
+                                  Please select the date.
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="col d-flex">
+                                <div class="form-group">
+                                  <label for="enddate" class="form-label"> End Date </label>
+                                  <input type="date" id="enddate" formControlName="endDate" class="input-class" placeholder=" ">
+                                  <div class="error" *ngIf="licenceForm.get('endDate')?.hasError('required') && licenceForm.get('endDate')?.touched">
+                                      Please select the date.
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                          
+                        <div class="row">
+                            <div class="col d-flex">
+                                <div class="form-group">
+                                  <label for="contrperiod" class="form-label"> Contract Period </label>
+                                  <input type="number" id="contrperiod" formControlName="contractPeriodInMonths" class="input-class" placeholder="Contract Period" >
+                                  <div class="error" *ngIf="licenceForm.get('contractPeriodInMonths')?.hasError('required') && licenceForm.get('contractPeriodInMonths')?.touched">
+                                    Please enter the number of period.
+                                  </div>
+                                </div>
+                              </div>  
+                            <div class="col d-flex">
+                                <div class="form-group">
+                                    <label for="formFile" class="form-label">Contract Document</label>
+                                    <!-- <input class="form-control" type="file" id="formFile"> -->
+                                    <input type="file" id="logoUrlPath" class="form-control" 
+                                    style="width: 245px; margin-left: 30px; font-size: 14px;"
+                                    aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                    <div  class="error" *ngIf="licenceForm.get('contractDocuments')?.hasError('required') && licenceForm.get('contractDocuments')?.touched">
+                                        Please upload the documents.
+                                     </div> 
+                                </div>
+                            </div>
+                        </div>
+                         
+                            
+                        <div class="row">
+                            <div class="col d-flex">
+                                <div class="form-group">
+                                    <label for="remarks" class="form-label">Remarks </label>
+                                    <input type="text" id="remarks" formControlName="remarks" class="input-class" placeholder="Remarks">
+                                    <div  class="error" *ngIf="licenceForm.get('remarks')?.hasError('required') && licenceForm.get('remarks')?.touched">
+                                        Please enter the remarks.
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="col d-flex">
+                                <label for="status" class="form-label">Status</label> 
+                                <div style="margin-left: 40px; margin-top: 5px;">
+                                    <label class="custom-radio-label" >
+                                    <input type="radio" formControlName="active" value="Y"> Active
+                                  </label>
+                                  <label class="ms-2 custom-radio-label">
+                                    <input type="radio" formControlName="active" value="N"> Inactive
+                                  </label>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center" style="padding-top: 20px ; padding-left: 150px;">
+                            <div class="col"></div>
+                               
+                            <div class="col">
+                                <button class="me-2 submit-button" (click)="onCancel()">
+                                  Cancel
+                                </button>
+                                <button  class="cancel-button" type="submit">Submit</button>
+                            </div>
+                            <div class="col"></div>
+                        </div>
+                    </form>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+

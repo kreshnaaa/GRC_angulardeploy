@@ -1,0 +1,507 @@
+<!-- <div style="margin-left: 13%;margin-top: -43%;"> -->
+    <div class="container">
+    <div class="m-4">
+        <div class="card rounded-0 border-info">
+            <section>
+                <div class="cardsetup">
+                <div class="links d-flex">
+                    <!-- <a routerLink="/home" class="home" (click)="onClickIcon()">Home /</a>
+                    <a routerLink="/license" class="license" (click)="onClickIcon()">License</a> -->
+                    <ol class="breadcrumb ms-4 mt-2">
+                        <li class="breadcrumb-item setup-hearder ms-2 "><a href="#">Home</a></li>
+                        <li class="breadcrumb-item setup-hearder ms-2 "><a href="">Client Management</a></li>
+                        <li class="breadcrumb-item active align-header" aria-current="page">Client Profile</li>
+                    </ol>
+                </div>
+                <div class="">
+                    <h5> 
+                       <img src="\assets\Images\profile.svg" alt="profile" class="profile"> 
+                       Client Profile </h5>
+                    <div class="d-flex button">
+                        <!-- <div class="inline-flex"> -->
+                            <input class="search" type="text" placeholder="All" class="filter">
+                            <img src="\assets\Images\CaretDownOutlined.svg" alt="dropdown" class="filtericon">
+                       
+                            <input class="search-input" type="text" placeholder="Search">
+                        <!-- <i class="bi bi-search searchicon"></i>  -->
+                        <img src="\assets\Images\search.svg" alt="search" class="searchicon">
+                        <!-- </div> -->
+                            <button 
+                            class="addcustomer" (click)="toggleAddNewForm()"
+                          >        
+                          <img src="\assets\Images\PlusCircleOutlined.svg" alt="plus">           
+                          Add New Client
+                            </button> 
+                        </div>
+                    </div>
+                </div>
+                    
+            </section>
+     
+            <!-- <div class="input-group">
+                <input type="text"
+                       formControlName="searchQuery"
+                       class="search-input"
+                       placeholder="Search..."
+                       [class.expanded]="isExpanded"
+                       (focus)="toggleInputExpansion()"
+                       (blur)="toggleInputExpansion()" [(ngModel)]="searchText" (ngModelChange)="filterGrid()">
+            </div> -->
+            <div class="table-container card m-3">
+                <table >
+                    <thead>
+                        <tr>
+                            <th >Customer Name  </th>
+                            <th>Address </th>
+                            <th>City </th>
+                            <!-- <th>Address </th> -->
+                            <th>State </th>
+                            <th>Country of Operation </th>
+                            <!-- <th>Contact Name  </th> -->
+                            <th>Phone Number </th>
+                            <th> Email Id  </th>
+                            <th> Description  </th>
+                            <th style="border: 2px solid #ffffff; ">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of tableData | paginate: { itemsPerPage: tableSize, currentPage: page }">
+                            <td>{{row.customerCompanyName}}</td>
+                            <td>{{row.customerAddress}}</td>
+                            <td>{{row.customerCity}}</td>
+                            <!-- <td>{{row.customerAddress}}</td> -->
+                            <td>{{row.customerState}}</td>
+                            <td>{{row.customerCountryOfOperation}}</td>
+                            <!-- <td>{{row.customername }}</td> -->
+                            <td>{{row.customerPhoneNumber}}</td>
+                            <td>{{row.customerEmailId}}</td>
+                            <td>{{row.customerDescription}}</td>
+                            <td><img src="assets\Images\EditOutlined.svg" alt="edit" (click)="editcustomer(row,'edit')" > <img src="assets\Images\DeleteOutlined.svg" alt="delete" class="delete" (click)="onDeleteButtonClick(row)"></td>
+                            <td></td>
+                            <!-- <td><i class="bi bi-trash " (click)="onDeleteButtonClick(row)" ></i></td>  -->
+                        </tr>
+                    </tbody>
+                    <ng-template #noDataFound>
+                        <tr>
+                            <td colspan="12" style="padding-left: 600px;">No data found</td>
+                        </tr>
+                    </ng-template> 
+                </table>
+            </div>
+            <div class="d-flex justify-content-center" >
+                <pagination-controls (pageChange)="onTableDataChange($event)" previousLabel="Prev" nextLabel="Next" style="font-family: Roboto;
+                font-size: 14px;
+                font-style: normal; height: 35px;">
+                </pagination-controls>
+            </div>
+            <!-- <app-alert [message]="successMessage" [show]="showSuccessPopup" ></app-alert> -->
+         
+            <section>
+                <div class="cardform" *ngIf="isNewCustomer">
+                    <div class="container m-2">
+                        <form class="row" [formGroup]="profileForm" (ngSubmit)="saveFormData()" type="button">
+                            <h5>New Client Profile</h5>
+                            <div class="custom-hr">
+                                <hr>
+                             </div>
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                        <label for="coName" class="form-label"> Customer Name </label>
+                                        <input type="text" id="customerCompanyName" formControlName="customerCompanyName"
+                                            class="input-class" placeholder="Customer Name" >
+                                            <div  class="error" *ngIf="profileForm.get('customerCompanyName')?.hasError('required') && profileForm.get('customerCompanyName')?.touched">
+                                                Please enter the customer name
+                                            </div>  
+                                            <div class="error" *ngIf="profileForm.get('customerCompanyName')?.hasError('pattern')">
+                                                No numaric and special characters allowed 
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                        <label for="address" class="form-label"> Address </label>
+                                        <input type="text" id="customerAddress" formControlName="customerAddress"
+                                            class="input-class" placeholder="Address" >
+                                            <div  class="error" *ngIf="profileForm.get('customerAddress')?.hasError('required') && profileForm.get('customerAddress')?.touched">
+                                                Please enter the address
+                                            </div>
+                                    </div> 
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                        <label for="city" class="form-label"> City</label>
+                                        <input type="text" id="customerCity" formControlName="customerCity"
+                                            class="input-class" placeholder="City">
+                                            <div  class="error" *ngIf="profileForm.get('customerCity')?.hasError('required') && profileForm.get('customerCity')?.touched">
+                                                Please enter the city
+                                            </div>  
+                                            <div class="error" *ngIf="profileForm.get('customerCity')?.hasError('pattern')">
+                                                No numaric and special characters allowed 
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label"> State </label>
+                                        <input type="text" id="customerState" formControlName="customerState"
+                                            class="input-class" placeholder="State" >
+                                            <div  class="error" *ngIf="profileForm.get('customerState')?.hasError('required') && profileForm.get('customerState')?.touched">
+                                                Please enter the state
+                                            </div>  
+                                            <div class="error" *ngIf="profileForm.get('customerState')?.hasError('pattern')">
+                                                No numaric and special characters allowed 
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+    
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                        <label for="coutoper" class="form-label"> Country of Operation </label>
+                                        <select formControlName="customerCountryOfOperation" class="input-class" name="country" style=" width: 240px;">
+                                            <option *ngFor="let country of getCountryCodes()" [value]="country">{{ country }}</option>
+                                            <option disabled selected value>Select country</option>
+                                          </select>
+                                        <!-- <input type="text" id="customerCountryOfOperation"
+                                            formControlName="customerCountryOfOperation" class="input-class"
+                                            placeholder="operation"> -->
+                                            <div  class="error" *ngIf="profileForm.get('customerCountryOfOperation')?.hasError('required') && profileForm.get('customerCountryOfOperation')?.touched">
+                                                Please select the country name
+                                            </div> 
+                                        </div>
+                                </div>
+                                <!-- <div class="col d-flex">
+                                    <div class="form-group">
+                                        <label for="phoneno" class="form-label"> Phone Number </label>
+                                        <!-- <div class="custom-input-group"> -->
+                                            <!-- <input type="text" class="country-code-input" placeholder="+91" readonly style="height:35px">
+                                            <input type="tel" class="phone-number-input" formControlName="customerPhoneNumber"
+                                                placeholder="Phone Number" style="width: 130px; height:35px">   
+                                               <input type="text" id="customerPhoneNumber" formControlName="customerPhoneNumber"
+                                                class="input-class" placeholder="Phone Number" > 
+                                                <div class="error" *ngIf="profileForm.get('customerPhoneNumber')?.hasError('required') && profileForm.get('customerPhoneNumber')?.touched" >
+                                                   Please enter phone number
+                                                </div>
+                                                <div class="error" *ngIf="profileForm.get('customerPhoneNumber')?.hasError('pattern')" >
+                                                    Please enter valid 10-digit phone number
+                                                </div>
+                                         </div> 
+                                    </div>
+                                </div> -->
+                                 <div class="col d-flex">
+                                    <div class="form-group">
+                                        <label for="contactname" class="form-label">Contact Name </label>
+                                        <input type="text" id="customername" formControlName="customername"
+                                            class="input-class" placeholder="Contact Name">
+                                            <div  class="error" *ngIf="profileForm.get('customername')?.hasError('required') && profileForm.get('customername')?.touched">
+                                                Please enter the contact name
+                                            </div>  
+                                            <div class="error" *ngIf="profileForm.get('customername')?.hasError('pattern')">
+                                                No  numeric and special characters allowed 
+                                            </div>
+                                    </div>
+    
+                                   
+                                <!-- </div> -->
+                            </div>
+                            </div>
+
+    
+    
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                        <label for="phoneno" class="form-label"> Phone Number </label>
+                                        <!-- <div class="custom-input-group"> -->
+                                            <!-- <input type="text" class="country-code-input" placeholder="+91" readonly style="height:35px">
+                                            <input type="tel" class="phone-number-input" formControlName="customerPhoneNumber"
+                                                placeholder="Phone Number" style="width: 130px; height:35px"> -->    
+                                               <input type="text" id="customerPhoneNumber" formControlName="customerPhoneNumber"
+                                                class="input-class" placeholder="Phone Number" > 
+                                                <div class="error" *ngIf="profileForm.get('customerPhoneNumber')?.hasError('required') && profileForm.get('customerPhoneNumber')?.touched" >
+                                                   Please enter phone number
+                                                </div>
+                                                <div class="error" *ngIf="profileForm.get('customerPhoneNumber')?.hasError('pattern')" >
+                                                    Please enter valid 10-digit phone number
+                                                </div>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+    
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="emailid" class="form-label"> Email Id </label>
+                                            <input type="text" id="customerEmailId" formControlName="customerEmailId"
+                                                class="input-class" placeholder="Email Id" >
+                                                <div  class="error" *ngIf="profileForm.get('customerEmailId')?.hasError('required') && profileForm.get('customerEmailId')?.touched">
+                                                    Please enter the email id
+                                                </div>         
+                                                <div  class="error" *ngIf="profileForm.get('customerEmailId')?.hasError('customerEmailId')">
+                                                    Please enter the valid Email Id
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                            </div>
+    
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="form-group">
+                                        <label for="desrp" class="form-label des" >Description </label>
+                                        <!-- <textarea id="description" id="customerDescription"
+                                            placeholder="Enter Description..." formControlName="customerDescription"
+                                            class="input-class" style="width: 240px;"></textarea> -->
+                                            <input type="text" id="description" formControlName="customerDescription"
+                                            class="input-class" placeholder="Enter Description..." >
+                                            <div  class="error" *ngIf="profileForm.get('customerDescription')?.hasError('required') && profileForm.get('customerDescription')?.touched">
+                                                Enter description
+                                            </div>  
+                                    </div>
+                                </div>
+    
+    
+                            </div>
+                            <div class="d-flex justify-content-center" style="padding-top: 20px ; padding-left: 150px;">
+                                <div class="col"></div>
+    
+                                <div class="col">
+                                    <button class="me-2 submit-button" (click)="onCancel()" >
+                                        Cancel
+                                    </button>
+                                    <button class="cancel-button"  type="submit">Submit</button>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                        </form>
+    
+                    </div>
+                </div>
+    
+            </section>
+
+            <!-- edit form -->
+        <div class="cardform" *ngIf="isEditCustomer">
+          <div class="container m-3">
+            <form class="row" [formGroup]="profileForm" (ngSubmit)="editcustomer(profileForm.value, 'submit')" >
+                <h5>Edit Client Profile</h5>
+                <div class="custom-hr">
+                    <hr>
+                 </div>
+                <div class="row">
+                    <div class="col d-flex">
+                        <div class="form-group">
+                            <label for="coName" class="form-label"> Customer Name </label>
+                            <input type="text" id="customerCompanyName" formControlName="customerCompanyName"
+                                class="input-class" placeholder="Customer Name" >
+                                <div  class="error" *ngIf="profileForm.get('customerCompanyName')?.hasError('required') && profileForm.get('customerCompanyName')?.touched">
+                                    Please enter the customer name
+                                </div>  
+                                <div class="error" *ngIf="profileForm.get('customerCompanyName')?.hasError('pattern')">
+                                    No numaric and special characters allowed 
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col d-flex">
+                        <div class="form-group">
+                            <label for="address" class="form-label"> Address </label>
+                            <input type="text" id="customerAddress" formControlName="customerAddress"
+                                class="input-class" placeholder="Address" >
+                                <div  class="error" *ngIf="profileForm.get('customerAddress')?.hasError('required') && profileForm.get('customerAddress')?.touched">
+                                    Please enter the address
+                                </div>
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col d-flex">
+                        <div class="form-group">
+                            <label for="city" class="form-label"> City</label>
+                            <input type="text" id="customerCity" formControlName="customerCity"
+                                class="input-class" placeholder="City">
+                                <div  class="error" *ngIf="profileForm.get('customerCity')?.hasError('required') && profileForm.get('customerCity')?.touched">
+                                    Please enter the city
+                                </div>  
+                                <div class="error" *ngIf="profileForm.get('customerCity')?.hasError('pattern')">
+                                    No numaric and special characters allowed 
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col d-flex">
+                        <div class="form-group">
+                            <label for="state" class="form-label"> State </label>
+                            <input type="text" id="customerState" formControlName="customerState"
+                                class="input-class" placeholder="State" >
+                                <div  class="error" *ngIf="profileForm.get('customerState')?.hasError('required') && profileForm.get('customerState')?.touched">
+                                    Please enter the state
+                                </div>  
+                                <div class="error" *ngIf="profileForm.get('customerState')?.hasError('pattern')">
+                                    No numaric and special characters allowed 
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col d-flex">
+                        <div class="form-group">
+                            <label for="coutoper" class="form-label"> Country of Operation </label>
+                            <select formControlName="customerCountryOfOperation" class="input-class" name="country" style=" width: 240px;">
+                                <option *ngFor="let country of getCountryCodes()" [value]="country">{{ country }}</option>
+                                <option disabled selected value>Select country</option>
+                              </select>
+                            <!-- <input type="text" id="customerCountryOfOperation"
+                                formControlName="customerCountryOfOperation" class="input-class"
+                                placeholder="operation"> -->
+                                <div  class="error" *ngIf="profileForm.get('customerCountryOfOperation')?.hasError('required') && profileForm.get('customerCountryOfOperation')?.touched">
+                                    Please select the country name
+                                </div> 
+                            </div>
+                    </div>
+                    <!-- <div class="col d-flex">
+                        <div class="form-group">
+                            <label for="contactname" class="form-label">Contact Name </label>
+                            <input type="text" id="customername" 
+                                class="input-class" placeholder="Contact Name">
+                                <div  class="error" *ngIf="profileForm.get('customername')?.hasError('required') && profileForm.get('customername')?.touched">
+                                    Please enter the contact name
+                                </div>  
+                                <div class="error" *ngIf="profileForm.get('customername')?.hasError('pattern')">
+                                    No  numeric and special characters allowed 
+                                </div>
+                        </div>
+
+                       
+                    </div> -->
+                    <div class="col d-flex">
+                        <div class="form-group">
+                            <label for="phoneno" class="form-label"> Phone Number </label>
+                            <!-- <div class="custom-input-group"> -->
+                                <!-- <input type="text" class="country-code-input" placeholder="+91" readonly style="height:35px">
+                                <input type="tel" class="phone-number-input" formControlName="customerPhoneNumber"
+                                    placeholder="Phone Number" style="width: 130px; height:35px"> -->    
+                                   <input type="text" id="customerPhoneNumber" formControlName="customerPhoneNumber"
+                                    class="input-class" placeholder="Phone Number" > 
+                                    <div class="error" *ngIf="profileForm.get('customerPhoneNumber')?.hasError('required') && profileForm.get('customerPhoneNumber')?.touched" >
+                                       Please enter phone number
+                                    </div>
+                                    <div class="error" *ngIf="profileForm.get('customerPhoneNumber')?.hasError('pattern')" >
+                                        Please enter valid 10-digit phone number
+                                    </div>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col d-flex">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="emailid" class="form-label"> Email Id </label>
+                                <input type="text" id="customerEmailId" formControlName="customerEmailId"
+                                    class="input-class" placeholder="Email Id" >
+                                    <div  class="error" *ngIf="profileForm.get('customerEmailId')?.hasError('required') && profileForm.get('customerEmailId')?.touched">
+                                        Please enter the email id
+                                    </div>         
+                                    <div  class="error" *ngIf="profileForm.get('customerEmailId')?.hasError('customerEmailId')">
+                                        Please enter the valid Email Id
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col d-flex">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="emailid" class="form-label"> Email Id </label>
+                                <input type="text" id="customerEmailId" formControlName="customerEmailId"
+                                    class="input-class" placeholder="Email Id" >
+                                    <div  class="error" *ngIf="profileForm.get('customerEmailId')?.hasError('required') && profileForm.get('customerEmailId')?.touched">
+                                        Please enter the email id
+                                    </div>         
+                                    <div  class="error" *ngIf="profileForm.get('customerEmailId')?.hasError('customerEmailId')">
+                                        Please enter the valid Email Id
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> -->
+
+                <!-- <div class="row"> -->
+                    <div class="col d-flex">
+                        <div class="form-group">
+                            <label for="desrp" class="form-label des"  style="top: -80px;">Description </label>
+                            <!-- <textarea id="description" id="customerDescription"
+                                placeholder="Enter Description..." formControlName="customerDescription"
+                                class="input-class" style="width: 240px;"></textarea> -->
+                                <input type="text" id="description" formControlName="customerDescription"
+                                class="input-class" placeholder="Enter Description..." >
+                                <div  class="error" *ngIf="profileForm.get('customerDescription')?.hasError('required') && profileForm.get('customerDescription')?.touched">
+                                    Enter description
+                                </div>  
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="d-flex justify-content-center" style="padding-top: 20px ; padding-left: 150px;">
+                    <div class="col"></div>
+
+                    <div class="col">
+                        <button class="me-2 submit-button" (click)="onCancel()" >
+                            Cancel
+                        </button>
+                        <button class="cancel-button"  type="submit">Submit</button>
+                    </div>
+                    <div class="col"></div>
+                </div>
+            </form>
+        </div>
+        </div>
+        </div>
+      </div>  
+ </div> 
+
+<!-- box modal -->
+
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+  </button> -->
+  
+  <!-- Modal -->
+  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <div>
+            Posted data successfully.
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+
+

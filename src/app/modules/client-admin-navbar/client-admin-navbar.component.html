@@ -1,0 +1,313 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<div id="sidebar">
+  <nav>
+    <button  class="btn btn-light  menu-button" routerLink="/knowledge" rourterLinkActive="active"
+    (click)="hidenavknowl()">
+    <span class="fa-solid fa-angle-right third"></span>
+
+    <span class="subtitle">Governance
+    </span>
+
+
+  </button>
+  <div class="sub-routes" *ngIf="hidenavknowledge">
+    <button class="menu-sub-button cyber " routerLink="/cybersecurity" rourterLinkActive="active"
+      (click)="hidenavknowl1()">
+      <span class="fa-solid fa-angle-right four"></span>
+
+      <span class="sub-route-label"> CyberSecurity </span>
+
+
+
+    </button>
+    <div class="sub-routes" *ngIf="hidenavknowledge1">
+
+      <div  routerLink="/iso27k" rourterLinkActive="active">
+
+        <span class="additional-links"> ISO 27k</span>
+      </div>
+
+      <div routerLink="/iso31k" rourterLinkActive="active">
+
+        <span class="additional-links"> ISO 31k</span>
+      </div>
+
+      <div  routerLink="/aramco" rourterLinkActive="active">
+
+        <span class=additional-links> Aramco</span>
+      </div>
+
+      <div  routerLink="/samacsf" rourterLinkActive="active">
+
+        <span class="additional-links"> SAMA CSF</span>
+      </div>
+
+      <div  routerLink="/ncaecc" rourterLinkActive="active">
+
+        <span class="additional-links"> NCA ECC</span>
+      </div>
+
+      <div  routerLink="/ctic" rourterLinkActive="active">
+
+        <span class="additional-links"> CTIC</span>
+      </div>
+
+      <div  routerLink="/cti" rourterLinkActive="active">
+
+        <span class="additional-links"> CTI</span>
+      </div>
+      <div  routerLink="/pcidss" rourterLinkActive="active">
+
+        <span class="additional-links"> PCI DSS</span>
+      </div>
+    </div>
+    <button class="menu-sub-button cyber" routerLink="/business" rourterLinkActive="active"
+      (click)="hidenavknowl2()">
+      <span class="fa-solid fa-angle-right four"></span>
+
+      <span class="sub-route-label" > Business Continuity </span>
+    
+    </button>
+    <div class="sub-routes" *ngIf="hidenavknowledge2">
+
+      <div  routerLink="/bcm22301" rourterLinkActive="active">
+
+        <span class="additional-links"> 22301</span>
+      </div>
+
+      <div  routerLink="/samabcm" rourterLinkActive="active">
+
+        <span class="additional-links"> SAMA BCM</span>
+      </div>
+
+
+    </div>
+    <button class="menu-sub-button cyber" routerLink="/ quality " rourterLinkActive="active"
+    (click)="hidenavknowl3()">
+    <span class="fa-solid fa-angle-right four"></span>
+
+    <span class="sub-route-label"> Qualitiy </span>
+  
+  </button>
+  <div class="sub-routes" *ngIf="hidenavknowledge3">
+
+    <div  routerLink="/iso9000" rourterLinkActive="active">
+
+      <span class="additional-links">ISO9000</span>
+    </div>
+    </div>
+    <button class="menu-sub-button cyber" routerLink="/health " rourterLinkActive="active"
+    (click)="hidenavknowl4()">
+    <span class="fa-solid fa-angle-right four"></span>
+
+    <span class="sub-route-label"> Health & Safety</span>
+  
+  </button>
+  <div class="sub-routes" *ngIf="hidenavknowledge4">
+
+  <div  routerLink="/iso14K" rourterLinkActive="active">
+
+    <span class="additional-links"> ISO 14K</span>
+  </div>
+  </div>
+  <button class=" menu-sub-button cyber" routerLink="/privacy " rourterLinkActive="active"
+  (click)="hidenavknowl5()">
+  <span class="fa-solid fa-angle-right four"></span>
+
+  <span class="sub-route-label"> Privacy</span>
+
+</button>
+    
+<div class="sub-routes" *ngIf="hidenavknowledge5">
+
+  <div routerLink="iso27701" rourterLinkActive="active">
+
+    <span class="additional-links"> ISO 27701</span>
+  </div>
+  <div  routerLink="iso18001" rourterLinkActive="active">
+
+    <span class="additional-links"> ISO 18001</span>
+  </div>
+  </div>
+  <button class="menu-sub-button cyber" routerLink="/cloud " rourterLinkActive="active"
+  (click)="hidenavknowl6()">
+  <span class="fa-solid fa-angle-right four"></span>
+
+  <span class="sub-route-label"> Cloud </span>
+
+</button>
+    
+<div class="sub-routes" *ngIf="hidenavknowledge6">
+
+  <div  routerLink="iso17001" rourterLinkActive="active">
+
+    <span class="additional-links"> ISO 17001</span>
+  </div>
+  <div  routerLink="cstar" rourterLinkActive="active">
+
+    <span class="additional-links"> CSTAR</span>
+  </div>
+  </div>
+    
+  <button class="menu-sub-button cyber" routerLink="/data " rourterLinkActive="active">
+  <span class="fa-solid fa-angle-right four"></span>
+
+  <span class="sub-route-label"> Data</span>
+
+</button>
+</div>
+
+       <button class="btn btn-light  menu-button" routerLink="/master" rourterLinkActive="active"
+      (click)="hidenavmaster()">
+      <span class="fa-solid fa-angle-right third"></span>
+
+      <span class="subtitle"> Masters</span>
+
+    </button>
+    <div class="sub-routes" *ngIf="hidenavMaster">
+      <div class="menu-sub-button " routerLink="/role" rourterLinkActive="active">
+
+        <span class="sub-route-label "> Roles </span>
+      </div>
+      <div class="menu-sub-button " routerLink="/user" rourterLinkActive="active">
+
+        <span class="sub-route-label "> Users </span>
+      </div>
+      <div class="menu-sub-button " routerLink="/active" rourterLinkActive="active">
+
+        <span class="sub-route-label "> Activity </span>
+      </div>
+      <div class="menu-sub-button " routerLink="/assign" rourterLinkActive="active">
+
+        <span class="sub-route-label "> Assignment</span>
+      </div>
+    </div>
+
+
+
+
+    <button class="btn btn-light  menu-button" routerLink="/activitymanagement" rourterLinkActive="active">
+      <span class="fa-solid fa-angle-right third"></span>
+
+      <span class="subtitle">Activity Management
+      </span>
+
+
+    </button>
+
+
+    <button class="btn btn-light  menu-button" routerLink="/config" rourterLinkActive="active"
+      (click)="hidenavconfig()">
+      <span class="fa-solid fa-angle-right third"></span>
+
+      <span class="subtitle">Configuration
+      </span>
+
+
+    </button>
+
+    <div class="sub-routes" *ngIf=" hidenavConfig">
+      <div class="menu-sub-button " routerLink="/initial" rourterLinkActive="active">
+
+        <span class="sub-route-label">Intial Setup</span>
+      </div>
+      <div class="menu-sub-button " routerLink="/compliance" rourterLinkActive="active">
+
+        <span class="sub-route-label"> Compliance Periods
+        </span>
+      </div>
+    </div>
+    <button class="btn btn-light  menu-button" routerLink="/helpclient" rourterLinkActive="active"
+      (click)="hidenavhel()">
+      <span class="fa-solid fa-angle-right third"></span>
+
+      <span class="subtitle">Help Content
+      </span>
+
+
+    </button>
+
+    <div class="sub-routes" *ngIf="hidenavhelp ">
+      <div class="menu-sub-button " routerLink="/url" rourterLinkActive="active">
+
+        <span class="sub-route-label">List of URL for the above governance areas</span>
+      </div>
+      <div class="menu-sub-button " routerLink="/ticketing" rourterLinkActive="active">
+
+        <span class="sub-route-label">Ticketing </span>
+      </div>
+
+    </div>
+
+    <button class="btn btn-light  menu-button" routerLink="/module" rourterLinkActive="active"
+      (click)="hidenavprospect()">
+
+      <span class="fa-solid fa-angle-right third"></span>
+
+      <span class="subtitle">Modules
+      </span>
+
+
+    </button>
+
+
+    <div class="sub-routes" *ngIf="hidenavprospects">
+      <div class="menu-sub-button " routerLink="/asset" rourterLinkActive="active">
+
+        <span class="sub-route-label ">Asset Management</span>
+      </div>
+      <div class="menu-sub-button " routerLink="/risk" rourterLinkActive="active">
+
+        <span class="sub-route-label ">Risk Management</span>
+      </div>
+      <div class="menu-sub-button " routerLink="/businessimpact" rourterLinkActive="active">
+
+        <span class="sub-route-label ">Business Impact Analysis</span>
+      </div>
+      <div class="menu-sub-button " routerLink="/metrics" rourterLinkActive="active">
+
+        <span class="sub-route-label ">Metrics</span>
+      </div>
+      <div class="menu-sub-button " routerLink="/kriandkpi" rourterLinkActive="active">
+
+        <span class="sub-route-label "> KRI&KPI </span>
+      </div>
+    </div>
+
+    <button class="btn btn-light  menu-button" routerLink="/reports" rourterLinkActive="active"
+      (click)="hidenavreport()">
+      <span class="fa-solid fa-angle-right third"></span>
+
+      <span class="subtitle"> Reports</span>
+
+    </button>
+    <div class="sub-routes" *ngIf="hidenavReport">
+      <div class="menu-sub-button " routerLink="/dash" rourterLinkActive="active">
+
+        <span class="sub-route-label "> Dashboards</span>
+      </div>
+      <div class="menu-sub-button " routerLink="/status" rourterLinkActive="active">
+
+        <span class="sub-route-label "> Status Reports </span>
+      </div>
+      <div class="menu-sub-button " routerLink="/userreport" rourterLinkActive="active">
+
+        <span class="sub-route-label "> User Report </span>
+      </div>
+      <div class="menu-sub-button " routerLink="/gap" rourterLinkActive="active">
+
+        <span class="sub-route-label ">Gap Report </span>
+      </div>
+      <div class="menu-sub-button " routerLink="/internalaudit" rourterLinkActive="active">
+
+        <span class="sub-route-label ">Internal Audit Report </span>
+
+      </div>
+    </div>
+
+  </nav>
+
+
+</div>

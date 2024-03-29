@@ -1,0 +1,21 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.links{
+    /* font-style: 'Roboto'; */
+    font-family: 'Roboto';
+    margin-left: 7px;
+    margin-top:10px;
+    /* font-weight:400; */
+    font-size: 14px;
+}
+.links a {
+    margin-right: 2px; /* Add margin-right to each link */
+  }
+.breadcrumb-item a { 
+    color: gray; 
+    text-decoration: none; 
+  }
+  .breadcrumb-item.active {
+    font-weight: 400; /* Example styling: bold text */
+  }

@@ -1,0 +1,14 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.container{
+    margin-left:-70px;
+    margin-top: -30px;
+  }
+.card{
+    flex-shrink: 0;
+    border:1px solid #34E7FF;
+    background:#eff1f1;
+    margin-left: 45px;
+    width: 1305px;
+}
