@@ -1,0 +1,39 @@
+name: Deploy to GitHub Pages
+ 
+on:
+  push:
+    branches:
+      - main  # Adjust the branch name as needed
+ 
+jobs:
+  deploy:
+    runs-on: self-hosted  # Use the latest version of Ubuntu as the runner
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+ 
+      - name: Use Node.js 18.14.2
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.14
+ 
+      - name: Install dependencies and build
+        run: |
+          npm install
+          npm run build
+ 
+      - name: Update build output directory
+        run: |
+          BUILD_OUTPUT_DIRECTORY='C:\Users\ADMIN\Desktop\Testdb'
+          
+          # Create the publish_dir if it doesn't exist
+          mkdir -p "$BUILD_OUTPUT_DIRECTORY"
+          
+          # Copy the built files to the publish_dir
+          cp -r build/* "$BUILD_OUTPUT_DIRECTORY"
+ 
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+          publish_dir: ${{ env.BUILD_OUTPUT_DIRECTORY }}  # Use the updated build output directory
