@@ -24,7 +24,7 @@ jobs:
  
       - name: Update build output directory
         run: |
-          BUILD_OUTPUT_DIRECTORY='C:\Users\ADMIN\Desktop\Testdb'
+          BUILD_OUTPUT_DIRECTORY='C:/actions-runner'
           
           # Create the publish_dir if it doesn't exist
           mkdir -p "$BUILD_OUTPUT_DIRECTORY"
