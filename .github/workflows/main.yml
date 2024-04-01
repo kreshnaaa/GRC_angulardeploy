@@ -32,6 +32,7 @@ jobs:
           )
           
           # Copy the built files to the publish_dir
+          
           xcopy /s /e /y build "%BUILD_OUTPUT_DIRECTORY%"
 
       - name: Deploy to GitHub Pages
