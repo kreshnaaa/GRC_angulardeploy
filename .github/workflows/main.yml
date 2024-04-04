@@ -3,40 +3,64 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Adjust the branch name as needed
+      - main # Change this to your main branch name if different
 
 jobs:
   deploy:
-    runs-on: self-hosted, windows-x64  # Use the self-hosted Windows runner
+    runs-on: self-hosted
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Use Node.js 18.14.2
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.14
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18.14'
 
-      - name: Install dependencies and build
-        run: |
-          npm install
-          npm run build
+    - name: Install dependencies
+      run: npm install # Or yarn install if you're using yarn
 
-      - name: Update build output directory
-        run: |
-          SET BUILD_OUTPUT_DIRECTORY=C:\actions-runner
-          
-          # Create the publish_dir if it doesn't exist
-          IF NOT EXIST "%BUILD_OUTPUT_DIRECTORY%" (
-            mkdir "%BUILD_OUTPUT_DIRECTORY%"
-          )
-          
-          # Copy the built files to the publish_dir
-          
-          xcopy /s /e /y build "%BUILD_OUTPUT_DIRECTORY%"
+    - name: Build website
+      run: npm run build # Or whatever command is required to build your website
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
-          publish_dir: ${{ env.BUILD_OUTPUT_DIRECTORY }}  # Use the updated build output directory
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.ACCESS_TOKEN }}
+        publish_dir: ./build # Update this to the directory containing your built website
+        publish_branch: gh-pages
+
+    - name: Configure Nginx
+      run: |
+        echo 'worker_processes 1;
+
+        events {
+          worker_connections 1024;
+        }
+
+        http {
+          include mime.types;
+          default_type application/octet-stream;
+
+          sendfile on;
+          keepalive_timeout 65;
+
+          server {
+            listen 9100;
+            server_name 192.168.29.84;
+
+            location / {
+              root C:\\actions-runner\\_work\\grc_froend_test\\grc_froend_test\\dist\\grc\\browser;
+              index index.html index.htm;
+              try_files $uri $uri/ /index.html;
+            }
+
+            return 301 https://$host$request_uri;
+          }
+        }' > C:\\Users\\ADMIN\\Desktop\\deployment\\Healthcareproject\\nginx\\conf\\nginx.conf
+
+    - name: Start Nginx
+      run: |
+        cd C:\\Users\\ADMIN\\Desktop\\deployment\\Healthcareproject\\nginx
+        start nginx
