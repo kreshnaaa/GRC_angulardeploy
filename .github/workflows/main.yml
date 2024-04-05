@@ -60,9 +60,9 @@ jobs:
                     root   html;
                 }
             }
-        }' > C:/Users/ADMIN/Desktop/nginx-1.24.0/conf/nginx.conf # Update the path to your nginx.conf file
+        }' > C:/Users/ADMIN/Desktop/nginx-1.25.4/conf/nginx.conf # Update the path to your nginx.conf file
 
     - name: Start Nginx
       run: |
-        cd C:/Users/ADMIN/Desktop/nginx-1.24.0
+        cd C:/Users/ADMIN/Desktop/nginx-1.25.4/conf/
         ./nginx
