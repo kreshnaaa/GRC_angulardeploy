@@ -47,7 +47,7 @@ jobs:
           keepalive_timeout 65;
 
           server {
-            listen 1234;
+            listen 2345;
             server_name 192.168.29.84;
 
             location / {
