@@ -1,3 +1,10 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Change this to your main branch name if different
+
 jobs:
   build-and-deploy:
     runs-on: self-hosted
