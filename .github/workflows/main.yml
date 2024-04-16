@@ -1,6 +1,6 @@
 jobs:
   build-and-deploy:
-    runs-on: windows-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -10,3 +10,4 @@ jobs:
 
       - name: Setup and Start Nginx
         run: powershell -File ./scripts/setup_nginx.ps1
+
