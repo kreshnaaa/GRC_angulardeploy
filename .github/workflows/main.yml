@@ -16,6 +16,10 @@ jobs:
         run: pwd
         shell: powershell
 
+      - name: Set Execution Policy
+        run: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+        shell: powershell
+        
       - name: List files in scripts directory
         run: dir "./scripts"
         shell: powershell
