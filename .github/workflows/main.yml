@@ -28,8 +28,8 @@ jobs:
         publish_dir: ./build
         publish_branch: gh-pages
 
-    - name: Configure Nginx
-      run: powershell -File "./scripts/configure_nginx.ps1"
+    - name: setup Nginx
+      run: powershell -File "./scripts/setup_nginx.ps1"
 
     - name: Start Nginx
       run: powershell -File "./scripts/start_nginx.ps1"
